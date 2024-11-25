@@ -1,10 +1,14 @@
 <?php
+error_reporting(0);
 
 require_once '../common.php';
 
 $link = db_connect();
 
-$results = mysqli_query($link, "SELECT * from posts LIMIT 100 OFFSET 0");
+$limit = filter_var($_GET['limit'], FILTER_SANITIZE_NUMBER_INT) ?: 10;
+$offset = filter_var($_GET['offset'], FILTER_SANITIZE_NUMBER_INT) ?: 0;
+
+$results = mysqli_query($link, "SELECT post_id, title, media_url FROM posts LIMIT $limit OFFSET $offset");
 $posts = [];
 
 while ($row = mysqli_fetch_assoc($results)) {

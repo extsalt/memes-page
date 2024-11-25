@@ -17,7 +17,11 @@ export default {};
     <h2 class="text-xl font-semibold text-gray-800 py-4 px-2">
       {{ post.title }}
     </h2>
-    <img v-bind:src="post.media_url" alt="" class="object-cover w-full" />
+    <img
+      v-bind:src="post.media_url"
+      alt=""
+      class="object-cover w-full max-h-96"
+    />
     <div
       class="flex justify-between items-center px-4 py-2 border-t border-gray-200"
     >
