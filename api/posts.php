@@ -5,17 +5,21 @@ require_once '../common.php';
 
 $link = db_connect();
 
-$limit = filter_var($_GET['limit'], FILTER_SANITIZE_NUMBER_INT) ?: 10;
-$offset = filter_var($_GET['offset'], FILTER_SANITIZE_NUMBER_INT) ?: 0;
+$page = filter_var($_GET['page'], FILTER_SANITIZE_NUMBER_INT) ?: 0;
+$limit = 20;
+$offset = $page * $limit;
 
-$results = mysqli_query($link, "SELECT post_id, title, media_url FROM posts LIMIT $limit OFFSET $offset");
+$results = mysqli_query($link, "SELECT id, title, media_url,likes,dislikes FROM posts LIMIT $limit OFFSET $offset");
 $posts = [];
 
 while ($row = mysqli_fetch_assoc($results)) {
     $posts[] = [
-        'id' => $row['post_id'],
+        'id' => (string) $row['id'],
         'title' => $row['title'],
-        'media_url' => $row['media_url']
+        'media_url' => $row['media_url'],
+        'likes' => $row['likes'],
+        'dislikes' => $row['dislikes'],
     ];
 }
-echo @json_encode($posts);
+$data = ['posts' => $posts, 'currentPage' => (string) $page, 'nextPage' => (string) ++$page];
+echo @json_encode($data);

@@ -12,4 +12,10 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./src", import.meta.url)),
     },
   },
+  build: {
+    outDir: "dist",
+    rollupOptions: {
+      input: ["src/main.js", "./index.php"],
+    },
+  },
 });
