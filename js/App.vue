@@ -77,7 +77,7 @@ import { RouterLink, RouterView } from 'vue-router';
         <div><a href="">Wholesome</a></div>
       </div>
     </div>
-    <main class="bg-pink-500 w-full">
+    <main class="w-full">
       <RouterView />
     </main>
   </div>
