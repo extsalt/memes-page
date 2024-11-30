@@ -1,6 +1,6 @@
 <?php
 define('ENV', 'dev');
-$src = ENV == 'dev1' ? 'http://localhost:5173/main.js' : '/public/main.js';
+$src = ENV == 'dev' ? 'http://localhost:5173/main.js' : '/public/js/main.js';
 ?>
 <html lang="en">
 
