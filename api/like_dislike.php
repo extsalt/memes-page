@@ -5,7 +5,7 @@ require_once '../common.php';
 
 $link = db_connect();
 $postID = filter_var($_POST['post_id'], FILTER_SANITIZE_NUMBER_INT) ?: 0;
-$action = 'like';
+$action = $_POST['action'];
 
 $query = "UPDATE posts set ";
 if ($action == 'like') {
@@ -19,7 +19,11 @@ $repsonse = [];
 if ($postID) {
     mysqli_query($link, $query);
     if (mysqli_affected_rows($link) >= 0) {
-        $repsonse['message'] = 'You liked the post';
+        if ($action == 'like') {
+            $repsonse['message'] = 'You liked the post';
+        } else {
+            $repsonse['message'] = 'You disliked the post';
+        }
         $repsonse['status'] = 'success';
     } else {
         $repsonse['message'] = 'Could not like the posts';
