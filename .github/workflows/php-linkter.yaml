@@ -1,0 +1,36 @@
+name: PHP Syntax Check for Modified Files
+
+on:
+  push:
+    branches:
+      - '**' # Run on all branches
+  pull_request:
+    branches:
+      - '**' # Run on all pull requests
+
+jobs:
+  php-syntax-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the code
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Find and check modified PHP files
+      - name: Check PHP syntax for modified files
+        run: |
+          # Get a list of modified PHP files
+          MODIFIED_FILES=$(git diff --name-only --diff-filter=AM HEAD^ HEAD | grep '\.php$' || true)
+
+          # If no PHP files were modified, skip the step
+          if [ -z "$MODIFIED_FILES" ]; then
+            echo "No modified PHP files to check."
+            exit 0
+          fi
+
+          # Check syntax for each modified PHP file
+          echo "$MODIFIED_FILES" | while read -r file; do
+            echo "Checking $file"
+            php -l "$file" || exit 1
+          done
