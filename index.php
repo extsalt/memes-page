@@ -8,6 +8,8 @@ $src = ENV == 'dev' ? 'http://localhost:5173/main.js' : '/public/js/main.js';
   <meta charset="UTF-8">
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Memes</title>
+  <style>
+  </style>
 </head>
 
 <body>
